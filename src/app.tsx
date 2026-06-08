@@ -36,18 +36,15 @@ export default function ShikiEditor() {
 	const codeRef = useRef<HTMLDivElement>(null)
 	const fileElementRef = useRef<HTMLInputElement>(null)
 
-	const [language, setLanguage, delLanguage] = useLocalStorage<string>('language')
-	const [theme, setTheme, delTheme] = useLocalStorage<string>('theme')
+	const [language, setLanguage] = useLocalStorage<string>('language')
+	const [theme, setTheme] = useLocalStorage<string>('theme')
 	const [font, setFont, delFont] = useLocalStorage<string>('font')
 	const [scale, setScale, delScale] = useLocalStorage<number>('scale')
 	const [spacing, setSpacing, delSpacing] = useLocalStorage<number>('spacing')
 	const [blur, setBlur, delBlur] = useLocalStorage<number>('blur')
-	const [layout, setLayout, delLayout] = useLocalStorage<number>('layout', 1)
-	const [opacity, setOpacity, delOpacity] = useLocalStorage<number>(
-		'opacity',
-		0.8
-	)
-	const [title, setTitle, delTitle] = useLocalStorage<string>('title')
+	const [layout, setLayout] = useLocalStorage<number>('layout', 1)
+	const [opacity, setOpacity] = useLocalStorage<number>('opacity', 0.8)
+	const [title, setTitle] = useLocalStorage<string>('title')
 	const [background, setBackground] = useLocalStorage<string>(
 		'background',
 		backgrounds[0].url
@@ -55,15 +52,18 @@ export default function ShikiEditor() {
 
 	function resetAll() {
 		setCode(defaultCode)
-		delLanguage()
-		delTheme()
+		setLanguage('tsx')
+		const systemPrefersDark = window.matchMedia(
+			'(prefers-color-scheme: dark)'
+		).matches
+		setTheme(systemPrefersDark ? 'catppuccin-mocha' : 'catppuccin-latte')
 		delFont()
 		delScale()
 		delSpacing()
 		delBlur()
-		delLayout()
-		delOpacity()
-		delTitle()
+		setLayout(1)
+		setOpacity(0.8)
+		setTitle('')
 		setBackground(backgrounds[0].url)
 	}
 
@@ -132,6 +132,21 @@ export default function ShikiEditor() {
 
 	return (
 		<>
+			<a
+				href="https://abdukahhar.uz"
+				target="_blank"
+				rel="noopener noreferrer"
+				className="fixed top-4 left-4 z-30 flex items-center transition-opacity hover:opacity-80"
+				aria-label="abdukahhar.uz"
+			>
+				<img
+					src="/logo.webp"
+					alt="Logo"
+					width={240}
+					height={100}
+					className="h-12 w-auto"
+				/>
+			</a>
 			<main className="flex justify-center items-center w-full min-h-dvh pt-8 pb-16">
 				{!html ? (
 					<Brush

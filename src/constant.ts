@@ -1,8 +1,12 @@
 export const defaultCode = `import { Elysia, t } from 'elysia'
-import { openapi } from '@elysiajs/openapi'
+import { drizzle } from 'drizzle-orm/bun-sqlite'
+import { Database } from 'bun:sqlite'
+import * as schema from './schema'
+
+const db = drizzle(new Database('app.sqlite'), { schema })
 
 const app = new Elysia()
-    .use(openapi())
+    .decorate('db', db)
     .get('/', { test: 'hello' })
     .post('/json', ({ body, status }) => body, {
         body: t.Object({
@@ -406,4 +410,3 @@ export const backgrounds = [
 	{ name: 'Server', thumb: '/images/server.webp', url: '/images/server.webp' },
 	{ name: 'Itachi', thumb: '/images/itachi.webp', url: '/images/itachi.webp' }
 ] as const
-

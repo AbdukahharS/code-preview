@@ -2,14 +2,26 @@
 <html lang="en" class="dark">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Make your code preview colorful</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#0a0a0a" />
 
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<link
-			rel="icon"
-			href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖌️</text></svg>"
+		<title>Code Preview — Turn your code into beautiful images</title>
+
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/logo.webp" />
+
+		<link rel="canonical" href="https://code.abdukahhar.uz/" />
+
+		<meta
+			name="description"
+			content="Generate beautiful, shareable images of your source code. Pick from multiple themes, syntax languages, fonts, and background presets — then export as PNG."
 		/>
+		<meta
+			name="keywords"
+			content="code to image, code screenshot, code preview, syntax highlighting, shiki, code snippet generator, beautiful code, share code"
+		/>
+		<meta name="author" content="AbdukahharS" />
+		<meta name="robots" content="index, follow" />
 
 		<link href="/src/global.css" rel="stylesheet" />
 
@@ -20,37 +32,62 @@
 			rel="stylesheet"
 		/>
 
-		<meta name="title" content="Make your code preview colorful" />
-		<meta
-			name="description"
-			content="Create a colorful image of your code. Customize between multiple themes, langauges, fonts, and background image."
-		/>
-		<meta name="author" content="AbdukahharS" />
-
 		<!-- Open Graph -->
-		<meta property="og:title" content="Make your code preview colorful" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Code Preview" />
+		<meta property="og:url" content="https://code.abdukahhar.uz/" />
+		<meta
+			property="og:title"
+			content="Code Preview — Turn your code into beautiful images"
+		/>
 		<meta
 			property="og:description"
-			content="Create a colorful image of your code. Customize between multiple themes, langauges, fonts, and background image."
+			content="Generate beautiful, shareable images of your source code. Pick from multiple themes, syntax languages, fonts, and background presets — then export as PNG."
 		/>
-		<meta property="article:author" content="AbdukahharS" />
-		<meta property="og:image" content="/images/preview.webp" />
-		<meta property="og:image:width" content="1920" />
-		<meta property="og:image:height" content="1080" />
+		<meta property="og:image" content="/logo.webp" />
+		<meta property="og:image:width" content="240" />
+		<meta property="og:image:height" content="100" />
+		<meta property="og:image:alt" content="Code Preview logo" />
 		<meta property="og:locale" content="en_US" />
-		<meta property="og:type" content="website" />
+		<meta property="article:author" content="AbdukahharS" />
 
-		<!-- Twitter Card -->
+		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Make your code preview colorful" />
+		<meta
+			name="twitter:title"
+			content="Code Preview — Turn your code into beautiful images"
+		/>
 		<meta
 			name="twitter:description"
-			content="Create a colorful image of your code. Customize between multiple themes, langauges, fonts, and background image."
+			content="Generate beautiful, shareable images of your source code. Pick from multiple themes, syntax languages, fonts, and background presets — then export as PNG."
 		/>
-		<meta name="twitter:image" content="/images/preview.webp" />
+		<meta name="twitter:image" content="/logo.webp" />
+		<meta name="twitter:image:alt" content="Code Preview logo" />
 		<meta name="twitter:creator" content="@AbdukahharS" />
 
-		<link rel="preload" as="image" href="/images/target-for-love.webp" />
+		<link rel="preload" as="image" href="/images/aurora.webp" />
+
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Code Preview",
+				"description": "Generate beautiful, shareable images of your source code with custom themes, fonts, and backgrounds.",
+				"url": "https://code.abdukahhar.uz/",
+				"applicationCategory": "DesignApplication",
+				"operatingSystem": "Web",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "USD"
+				},
+				"author": {
+					"@type": "Person",
+					"name": "AbdukahharS",
+					"url": "https://abdukahhar.uz"
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<div id="root"></div>
