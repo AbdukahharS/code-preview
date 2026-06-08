@@ -390,3 +390,20 @@ export const languages = [
 	'zsh',
 	'文言'
 ] as const
+
+export const backgrounds = [
+	{ name: 'Aurora', thumb: '/images/aurora.webp', url: '/images/aurora.webp' },
+	{ name: 'Ridge', thumb: '/images/ridge.webp', url: '/images/ridge.webp' },
+	{ name: 'Coast', thumb: '/images/coast.webp', url: '/images/coast.webp' },
+	{ name: 'Bloom', thumb: '/images/bloom.webp', url: '/images/bloom.webp' },
+	{ name: 'Dunes', thumb: '/images/dunes.webp', url: '/images/dunes.webp' },
+	{ name: 'Mist', thumb: '/images/mist.webp', url: '/images/mist.webp' },
+	{
+		name: 'Circuit',
+		thumb: '/images/circuit.webp',
+		url: '/images/circuit.webp'
+	},
+	{ name: 'Server', thumb: '/images/server.webp', url: '/images/server.webp' },
+	{ name: 'Itachi', thumb: '/images/itachi.webp', url: '/images/itachi.webp' }
+] as const
+

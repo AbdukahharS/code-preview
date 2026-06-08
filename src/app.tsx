@@ -6,7 +6,7 @@ import { Image, ArrowDownToLine, Brush, Minus, X, Square } from 'lucide-react'
 import { codeToHtml } from 'shiki'
 import { useLocalStorage } from 'react-use'
 
-import { defaultCode, languages, themes } from './constant'
+import { backgrounds, defaultCode, languages, themes } from './constant'
 import { isLight } from './utils/luma'
 import { compressImage, isSafari } from './utils/compress'
 import clsx from 'clsx'
@@ -21,6 +21,12 @@ import {
 } from '@/components/ui/combobox'
 import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger
+} from '@/components/ui/popover'
+import { Upload } from 'lucide-react'
 
 export default function ShikiEditor() {
 	const [code, setCode] = useLocalStorage('code', defaultCode)
@@ -324,14 +330,54 @@ export default function ShikiEditor() {
 				)}
 			</main>
 			<aside className="fixed z-30 left-1/2 bottom-4 flex items-center gap-4 max-w-[calc(100%-2rem)] p-4 -translate-x-1/2 text-base text-neutral-700 dark:text-neutral-300 bg-neutral-50 dark:bg-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-700 shadow-2xl shadow-black/5 overflow-y-hidden overflow-x-auto">
-				<button
-					className="flex justify-center items-center size-9 min-w-9 interact:bg-sky-400/7.5 interact:text-sky-400 interact:scale-110 rounded-xl transition-all cursor-pointer"
-					onClick={() => fileElementRef.current?.click()}
-					title="Change Background"
-					aria-label="Change Background"
-				>
-					<Image size={21} strokeWidth={1.5} />
-				</button>
+				<Popover>
+					<PopoverTrigger
+						className="flex justify-center items-center size-9 min-w-9 interact:bg-sky-400/7.5 interact:text-sky-400 interact:scale-110 rounded-xl transition-all cursor-pointer"
+						title="Change Background"
+						aria-label="Change Background"
+					>
+						<Image size={21} strokeWidth={1.5} />
+					</PopoverTrigger>
+					<PopoverContent
+						side="top"
+						align="start"
+						className="w-72"
+					>
+						<div className="grid grid-cols-3 gap-2">
+							{backgrounds.map((bg) => {
+								const active = background === bg.url
+								return (
+									<button
+										key={bg.name}
+										onClick={() => setBackground(bg.url)}
+										title={bg.name}
+										aria-label={bg.name}
+										className={clsx(
+											'group relative aspect-[4/3] w-full overflow-hidden rounded-lg ring-1 transition-all cursor-pointer',
+											active
+												? 'ring-2 ring-sky-400'
+												: 'ring-foreground/10 hover:ring-foreground/30'
+										)}
+									>
+										<img
+											src={bg.thumb}
+											alt={bg.name}
+											loading="lazy"
+											className="size-full object-cover"
+										/>
+									</button>
+								)
+							})}
+						</div>
+						<button
+							onClick={() => fileElementRef.current?.click()}
+							className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-foreground/15 hover:border-sky-400 hover:text-sky-400 px-3 py-2 text-sm transition-colors cursor-pointer"
+						>
+							<Upload size={16} strokeWidth={1.75} />
+							Upload image
+						</button>
+					</PopoverContent>
+				</Popover>
 				<input
 					ref={fileElementRef}
 					className="hidden"
