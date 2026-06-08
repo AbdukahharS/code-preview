@@ -124,7 +124,7 @@ export default function ShikiEditor() {
 			})
 			.then((dataUrl) => {
 				const link = document.createElement('a')
-				link.download = 'code-salt.jpg'
+				link.download = 'code-preview.jpg'
 				link.href = dataUrl
 				link.click()
 			})
@@ -192,7 +192,7 @@ export default function ShikiEditor() {
 									) as CSSProperties
 								}
 							>
-								<header className="absolute top-2 w-full z-10 flex items-center px-2">
+								<header className="absolute top-2 w-full z-40 flex items-center px-2">
 									{layout === 2 && (
 										<input
 											type="text"
