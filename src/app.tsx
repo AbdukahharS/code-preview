@@ -26,7 +26,7 @@ import {
 	PopoverContent,
 	PopoverTrigger
 } from '@/components/ui/popover'
-import { Upload } from 'lucide-react'
+import { RotateCcw, Upload } from 'lucide-react'
 
 export default function ShikiEditor() {
 	const [code, setCode] = useLocalStorage('code', defaultCode)
@@ -36,16 +36,36 @@ export default function ShikiEditor() {
 	const codeRef = useRef<HTMLDivElement>(null)
 	const fileElementRef = useRef<HTMLInputElement>(null)
 
-	const [language, setLanguage] = useLocalStorage<string>('language')
-	const [theme, setTheme] = useLocalStorage<string>('theme')
+	const [language, setLanguage, delLanguage] = useLocalStorage<string>('language')
+	const [theme, setTheme, delTheme] = useLocalStorage<string>('theme')
 	const [font, setFont, delFont] = useLocalStorage<string>('font')
 	const [scale, setScale, delScale] = useLocalStorage<number>('scale')
 	const [spacing, setSpacing, delSpacing] = useLocalStorage<number>('spacing')
 	const [blur, setBlur, delBlur] = useLocalStorage<number>('blur')
-	const [layout, setLayout] = useLocalStorage<number>('layout', 1)
-	const [opacity, setOpacity] = useLocalStorage<number>('opacity', 0.8)
-	const [title, setTitle] = useLocalStorage<string>('title')
-	const [background, setBackground] = useLocalStorage<string>('background')
+	const [layout, setLayout, delLayout] = useLocalStorage<number>('layout', 1)
+	const [opacity, setOpacity, delOpacity] = useLocalStorage<number>(
+		'opacity',
+		0.8
+	)
+	const [title, setTitle, delTitle] = useLocalStorage<string>('title')
+	const [background, setBackground] = useLocalStorage<string>(
+		'background',
+		backgrounds[0].url
+	)
+
+	function resetAll() {
+		setCode(defaultCode)
+		delLanguage()
+		delTheme()
+		delFont()
+		delScale()
+		delSpacing()
+		delBlur()
+		delLayout()
+		delOpacity()
+		delTitle()
+		setBackground(backgrounds[0].url)
+	}
 
 	const [colorScheme, setColorScheme] = useLocalStorage<'light' | 'dark'>(
 		'color-scheme',
@@ -606,6 +626,15 @@ export default function ShikiEditor() {
 						}}
 					/>
 				</label>
+
+				<button
+					className="flex justify-center items-center size-9 min-w-9 interact:bg-rose-400/7.5 interact:text-rose-400 interact:scale-110 rounded-xl transition-all cursor-pointer"
+					onClick={resetAll}
+					title="Reset"
+					aria-label="Reset"
+				>
+					<RotateCcw size={20} strokeWidth={1.5} />
+				</button>
 
 				<button
 					className="flex justify-center items-center size-9 min-w-9 interact:bg-sky-400/7.5 interact:text-sky-400 interact:scale-110 rounded-xl transition-all cursor-pointer"
