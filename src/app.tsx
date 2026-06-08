@@ -11,6 +11,17 @@ import { isLight } from './utils/luma'
 import { compressImage, isSafari } from './utils/compress'
 import clsx from 'clsx'
 
+import {
+	Combobox,
+	ComboboxContent,
+	ComboboxEmpty,
+	ComboboxInput,
+	ComboboxItem,
+	ComboboxList
+} from '@/components/ui/combobox'
+import { Input } from '@/components/ui/input'
+import { Slider } from '@/components/ui/slider'
+
 export default function ShikiEditor() {
 	const [code, setCode] = useLocalStorage('code', defaultCode)
 	const [html, setHtml] = useState('')
@@ -339,13 +350,13 @@ export default function ShikiEditor() {
 					<span className="text-xs text-neutral-400 font-light">
 						Scale
 					</span>
-					<input
+					<Input
 						type="number"
 						name="scale"
 						pattern="[0-9]+([.][0-9]{1,2})?"
 						placeholder="1.25"
 						value={scale ?? ''}
-						className="outline-none max-w-16"
+						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
 							let n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
@@ -361,13 +372,13 @@ export default function ShikiEditor() {
 					<span className="text-xs text-neutral-400 font-light">
 						Spacing
 					</span>
-					<input
+					<Input
 						type="tel"
 						name="spacing"
 						pattern="[0-9]+([.][0-9]{1,2})?"
 						placeholder="48"
 						value={spacing ?? ''}
-						className="outline-none max-w-16"
+						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
 							let n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
@@ -383,13 +394,13 @@ export default function ShikiEditor() {
 					<span className="text-xs text-neutral-400 font-light">
 						Blur
 					</span>
-					<input
+					<Input
 						type="number"
 						name="blur"
 						pattern="[0-9]+([.][0-9]{1,2})?"
 						placeholder="10"
 						value={blur ?? ''}
-						className="outline-none max-w-16"
+						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
 							let n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
@@ -423,25 +434,23 @@ export default function ShikiEditor() {
 					</div>
 				</label>
 
-				<label className="flex flex-col -translate-y-0.5 mr-2">
+				<label className="flex flex-col -translate-y-0.5 mr-2 w-32">
 					<span className="text-xs text-neutral-400 font-light">
 						Opacity ({opacity})
 					</span>
-					<div className="flex items-center mt-0.5 gap-0.5">
-						<input
-							type="range"
-							min="0"
-							max="1"
-							step="0.025"
-							value={opacity}
-							onChange={(e) => {
-								const n = parseFloat(e.currentTarget.value)
-								if (isNaN(n)) {
-									delSpacing()
-									return
-								}
-								setOpacity(e.target.value as unknown as number)
+					<div className="flex items-center mt-2 gap-0.5">
+						<Slider
+							min={0}
+							max={1}
+							step={0.025}
+							value={[opacity ?? 0.8]}
+							onValueChange={(value) => {
+								const n = Array.isArray(value)
+									? value[0]
+									: (value as number)
+								setOpacity(n)
 							}}
+							className="[&_[data-slot=slider-track]]:bg-neutral-200! [&_[data-slot=slider-track]]:dark:bg-neutral-700! [&_[data-slot=slider-range]]:bg-sky-400! [&_[data-slot=slider-thumb]]:bg-white! [&_[data-slot=slider-thumb]]:border-sky-400! [&_[data-slot=slider-thumb]]:size-3.5!"
 						/>
 					</div>
 				</label>
@@ -450,36 +459,58 @@ export default function ShikiEditor() {
 					<span className="text-xs text-neutral-400 font-light appearance-none">
 						Language
 					</span>
-					<select
-						name="theme"
+					<Combobox
+						items={languages as unknown as string[]}
 						value={language ?? 'tsx'}
-						className="outline-none appearance-none"
-						onChange={(e) => setLanguage(e.target.value)}
+						onValueChange={(value) =>
+							setLanguage((value as string) ?? 'tsx')
+						}
 					>
-						{languages.map((language) => (
-							<option key={language} value={language}>
-								{language}
-							</option>
-						))}
-					</select>
+						<ComboboxInput
+							placeholder="Language"
+							className="w-24 border-0! shadow-none! bg-transparent! dark:bg-transparent! p-0! h-auto! rounded-none! focus-within:ring-0! focus-within:border-0! [&_input]:px-0! [&_input]:bg-transparent! [&_input]:dark:bg-transparent!"
+						/>
+						<ComboboxContent>
+							<ComboboxEmpty>No language found.</ComboboxEmpty>
+							<ComboboxList>
+								{(item: string) => (
+									<ComboboxItem key={item} value={item}>
+										{item}
+									</ComboboxItem>
+								)}
+							</ComboboxList>
+						</ComboboxContent>
+					</Combobox>
 				</label>
 
 				<label className="flex flex-col">
 					<span className="text-xs text-neutral-400 font-light">
 						Theme
 					</span>
-					<select
-						name="theme"
+					<Combobox
+						items={themes as unknown as string[]}
 						value={theme ?? 'catppuccin-latte'}
-						className="outline-none appearance-none"
-						onChange={(e) => setTheme(e.target.value)}
+						onValueChange={(value) =>
+							setTheme(
+								(value as string) ?? 'catppuccin-latte'
+							)
+						}
 					>
-						{themes.map((theme) => (
-							<option key={theme} value={theme}>
-								{theme}
-							</option>
-						))}
-					</select>
+						<ComboboxInput
+							placeholder="Theme"
+							className="w-36 border-0! shadow-none! bg-transparent! dark:bg-transparent! p-0! h-auto! rounded-none! focus-within:ring-0! focus-within:border-0! [&_input]:px-0! [&_input]:bg-transparent! [&_input]:dark:bg-transparent!"
+						/>
+						<ComboboxContent>
+							<ComboboxEmpty>No theme found.</ComboboxEmpty>
+							<ComboboxList>
+								{(item: string) => (
+									<ComboboxItem key={item} value={item}>
+										{item}
+									</ComboboxItem>
+								)}
+							</ComboboxList>
+						</ComboboxContent>
+					</Combobox>
 				</label>
 
 				<label className="flex flex-col">
@@ -514,12 +545,12 @@ export default function ShikiEditor() {
 							''
 						)}
 					</span>
-					<input
+					<Input
 						type="text"
 						name="font"
 						placeholder="JetBrains Mono"
 						value={font ?? ''}
-						className="outline-none"
+						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! text-base! md:text-base!"
 						onChange={(e) => {
 							if (e.currentTarget.value == '') {
 								delFont()
