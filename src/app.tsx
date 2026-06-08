@@ -75,7 +75,7 @@ export default function ShikiEditor() {
 		).matches
 
 		setTheme(systemPrefersDark ? 'catppuccin-mocha' : 'catppuccin-latte')
-	}, [])
+	}, [theme, setTheme])
 
 	useEffect(() => {
 		if (colorScheme === 'dark')
@@ -358,7 +358,7 @@ export default function ShikiEditor() {
 						value={scale ?? ''}
 						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
-							let n = parseFloat(e.currentTarget.value)
+							const n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
 								delScale()
 								return
@@ -380,7 +380,7 @@ export default function ShikiEditor() {
 						value={spacing ?? ''}
 						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
-							let n = parseFloat(e.currentTarget.value)
+							const n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
 								delSpacing()
 								return
@@ -402,7 +402,7 @@ export default function ShikiEditor() {
 						value={blur ?? ''}
 						className="h-auto! border-0! bg-transparent! dark:bg-transparent! p-0! rounded-none! shadow-none! focus-visible:ring-0! focus-visible:border-0! max-w-16 text-base! md:text-base! [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
 						onChange={(e) => {
-							let n = parseFloat(e.currentTarget.value)
+							const n = parseFloat(e.currentTarget.value)
 							if (isNaN(n)) {
 								delBlur()
 								return
